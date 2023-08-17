@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:note_app/core/dimensions/dimensions.dart';
 import 'package:note_app/core/route_utils/route_utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/app_colors/app_colors.dart';
 import '../../core/models/note.dart';
@@ -24,7 +26,15 @@ class NoteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dismissible(
       key: UniqueKey(),
-      onDismissed: (direction) {},
+      onDismissed: (direction) async {
+        final prefs = await SharedPreferences.getInstance();
+        final cachedNotes = prefs.getStringList('notes') ?? [];
+        final index = cachedNotes.indexWhere((element) {
+          return note.id == jsonDecode(element)['id'];
+        });
+        cachedNotes.removeAt(index);
+        prefs.setStringList('notes', cachedNotes);
+      },
       background: Container(
         margin: _cardMargin,
         width: double.infinity,
