@@ -1,14 +1,20 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:note_app/core/dimensions/dimensions.dart';
 import 'package:note_app/core/route_utils/route_utils.dart';
 
 import '../../core/app_colors/app_colors.dart';
+import '../../core/models/note.dart';
+import '../../core/utils.dart';
 import '../../features/note_details/view.dart';
 import '../app_text.dart';
 
 class NoteCard extends StatelessWidget {
-  const NoteCard({super.key});
+  const NoteCard({super.key, required this.note});
+
+  final Note note;
 
   EdgeInsets get _cardMargin => EdgeInsets.only(bottom: 24.height);
 
@@ -45,14 +51,13 @@ class NoteCard extends StatelessWidget {
             width: double.infinity,
             alignment: Alignment.center,
             child: AppText(
-              title:
-                  "Book Review : The Design of Everyday Things by Don Norman",
+              title: note.title,
               color: AppColors.black,
               fontSize: 24,
             ),
             decoration: BoxDecoration(
               borderRadius: _radius,
-              color: Colors.green,
+              color: Utils.noteColors[Random().nextInt(Utils.noteColors.length - 1)],
             ),
           ),
         ),

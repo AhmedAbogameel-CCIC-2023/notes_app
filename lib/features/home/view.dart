@@ -9,9 +9,17 @@ import '../../widgets/app_app_bar.dart';
 import '../../widgets/app_icon_button.dart';
 import '../note_editor/view.dart';
 import '../search/view.dart';
+import 'home_controller.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  HomeController controller = HomeController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +42,22 @@ class HomeView extends StatelessWidget {
           SizedBox(width: 16.width),
         ],
       ),
-      body: CreateYourFirstNoteVector(),
-      // body: ListView.builder(
-      //   padding: EdgeInsets.all(16),
-      //   itemCount: 10,
-      //   itemBuilder: (context, index) {
-      //     return NoteCard();
-      //   },
-      // ),
+      body: Builder(
+        builder: (context) {
+          if (controller.notes.isEmpty) {
+            return CreateYourFirstNoteVector();
+          }
+          return ListView.builder(
+            padding: EdgeInsets.all(16),
+            itemCount: controller.notes.length,
+            itemBuilder: (context, index) {
+              return NoteCard(
+                note: controller.notes[index],
+              );
+            },
+          );
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(
           FontAwesomeIcons.plus,

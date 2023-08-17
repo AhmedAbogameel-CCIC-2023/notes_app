@@ -23,4 +23,16 @@ class Utils {
       ),
     );
   }
+
+  static const List<Color> noteColors = [
+    Colors.grey,
+    Colors.green,
+    Colors.purple,
+    Colors.yellow,
+    Colors.blue,
+    Colors.amber,
+    Colors.teal,
+    Colors.blueGrey,
+    Colors.brown,
+  ];
 }

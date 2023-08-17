@@ -8,11 +8,17 @@ class AppTextField extends StatelessWidget {
     required this.hint,
     this.cursorHeight = 28,
     this.hintFontSize = 24,
+    this.onChanged,
+    this.validator,
+    this.maxLength,
   });
 
   final String hint;
   final double cursorHeight;
   final double hintFontSize;
+  final void Function(String)? onChanged;
+  final String? Function(String?)? validator;
+  final int? maxLength;
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +32,15 @@ class AppTextField extends StatelessWidget {
       ),
       maxLines: null,
       textInputAction: TextInputAction.newline,
+      onChanged: onChanged,
+      validator: validator,
+      maxLength: maxLength,
       decoration: InputDecoration(
+        counterStyle: TextStyle(
+          color: AppColors.white,
+        ),
         contentPadding: EdgeInsets.zero,
         hintText: hint,
-
         hintStyle: TextStyle(
           color: AppColors.gray,
           fontSize: hintFontSize,
