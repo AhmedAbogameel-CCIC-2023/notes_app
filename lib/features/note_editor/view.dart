@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:note_app/core/dimensions/dimensions.dart';
 import 'package:note_app/widgets/app_icon_button.dart';
 
+import '../../core/models/note.dart';
 import '../../widgets/app_app_bar.dart';
 import '../../widgets/app_dialog.dart';
 import '../../widgets/app_text_field.dart';
@@ -16,7 +17,6 @@ class NoteEditorView extends StatefulWidget {
 }
 
 class _NoteEditorViewState extends State<NoteEditorView> {
-
   NoteEditorController controller = NoteEditorController();
 
   @override
@@ -37,9 +37,16 @@ class _NoteEditorViewState extends State<NoteEditorView> {
               message: "Save changes ?",
               confirmTitle: "Save",
               onConfirm: () async {
-                await controller.addNote();
-                Navigator.pop(context);
-                Navigator.pop(context);
+                final note = await controller.addNote();
+                if (note == null) {
+                  Navigator.pop(context);
+                } else {
+                  Navigator.pop(context);
+                  Navigator.pop(
+                    context,
+                    note,
+                  );
+                }
               },
               onCancel: () {
                 Navigator.pop(context);

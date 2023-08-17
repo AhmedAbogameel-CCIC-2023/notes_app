@@ -3,15 +3,17 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../core/models/note.dart';
+
 class NoteEditorController {
   final formKey = GlobalKey<FormState>();
 
   String? title;
   String? subtitle;
 
-  Future<void> addNote() async {
+  Future<Note?> addNote() async {
     if (!formKey.currentState!.validate()) {
-      return;
+      return null;
     }
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String id = DateTime.now().millisecondsSinceEpoch.toString();
@@ -27,6 +29,11 @@ class NoteEditorController {
     await prefs.setStringList(
       'notes',
       cachedNotes,
+    );
+    return Note(
+      title: title!,
+      id: id,
+      subtitle: subtitle!,
     );
   }
 }

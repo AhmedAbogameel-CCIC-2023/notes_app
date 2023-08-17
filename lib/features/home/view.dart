@@ -22,6 +22,12 @@ class _HomeViewState extends State<HomeView> {
   HomeController controller = HomeController();
 
   @override
+  void initState() {
+    controller.getCachedNotes();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppAppBar(
@@ -63,10 +69,16 @@ class _HomeViewState extends State<HomeView> {
           FontAwesomeIcons.plus,
           size: 24.height,
         ),
-        onPressed: () => RouteUtils.push(
-          context: context,
-          view: NoteEditorView(),
-        ),
+        onPressed: () async {
+          final result = await RouteUtils.push(
+            context: context,
+            view: NoteEditorView(),
+          );
+          if (result != null) {
+            controller.notes.insert(0, result);
+            setState(() {});
+          }
+        },
       ),
     );
   }

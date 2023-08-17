@@ -1,18 +1,24 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/models/note.dart';
 
 class HomeController {
-  List<Note> notes = [
-    Note(
-      id: "1",
-      title: 'title1',
-      subtitle: 'subtitle1',
-    ),
-    Note(
-      id: "2",
-      title: 'title2',
-      subtitle: 'subtitle2',
-    ),
-  ];
+  List<Note> notes = [];
+
+  Future<void> getCachedNotes() async {
+    final prefs = await SharedPreferences.getInstance();
+    final cachedNotes = prefs.getStringList('notes') ?? [];
+    for (var i in cachedNotes) {
+      notes.add(
+        Note(
+          subtitle: jsonDecode(i)['subtitle'],
+          title: jsonDecode(i)['title'],
+          id: jsonDecode(i)['id'],
+        ),
+      );
+    }
+  }
+
 }

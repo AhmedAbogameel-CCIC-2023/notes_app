@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class RouteUtils {
-  static void push({
+  static Future<dynamic> push({
     required BuildContext context,
     required Widget view,
   }) {
-    Navigator.of(context).push(
+    return Navigator.of(context).push(
       _getRoute(view),
     );
   }
@@ -14,20 +14,20 @@ class RouteUtils {
     Navigator.of(context).pop();
   }
 
-  static void pushReplacement({
+  static Future<dynamic> pushReplacement({
     required BuildContext context,
     required Widget view,
   }) {
-    Navigator.of(context).pushReplacement(
+    return Navigator.of(context).pushReplacement(
       _getRoute(view),
     );
   }
 
-  static void pushAndPopAll({
+  static Future<dynamic> pushAndPopAll({
     required BuildContext context,
     required Widget view,
   }) {
-    Navigator.of(context).pushAndRemoveUntil(
+    return Navigator.of(context).pushAndRemoveUntil(
       _getRoute(view),
       (route) => false,
     );
