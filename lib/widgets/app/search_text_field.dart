@@ -4,13 +4,19 @@ import '../../core/app_colors/app_colors.dart';
 import '../../core/route_utils/route_utils.dart';
 
 class SearchTextField extends StatelessWidget {
-  const SearchTextField({super.key});
+  const SearchTextField({
+    super.key,
+    this.onChanged,
+  });
+
+  final void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       keyboardAppearance: Brightness.dark,
       cursorColor: AppColors.white,
+      onChanged: onChanged,
       style: TextStyle(
         color: AppColors.white,
       ),

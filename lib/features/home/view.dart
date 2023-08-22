@@ -38,7 +38,7 @@ class _HomeViewState extends State<HomeView> {
             icon: FontAwesomeIcons.magnifyingGlass,
             onTap: () => RouteUtils.push(
               context: context,
-              view: SearchView(),
+              view: SearchView(notes: controller.notes),
             ),
           ),
           SizedBox(width: 12.width),
