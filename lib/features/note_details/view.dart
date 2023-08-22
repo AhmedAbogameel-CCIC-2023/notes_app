@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:note_app/core/dimensions/dimensions.dart';
 
+import '../../core/models/note.dart';
 import '../../core/route_utils/route_utils.dart';
 import '../../widgets/app_app_bar.dart';
 import '../../widgets/app_icon_button.dart';
@@ -9,7 +10,9 @@ import '../../widgets/app_text.dart';
 import '../note_editor/view.dart';
 
 class NoteDetailsView extends StatelessWidget {
-  const NoteDetailsView({super.key});
+  const NoteDetailsView({super.key, required this.note});
+
+  final Note note;
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +34,13 @@ class NoteDetailsView extends StatelessWidget {
         padding: EdgeInsets.all(16),
         children: [
           AppText(
-            title: 'Title',
+            title: note.title,
             fontSize: 36,
             fontWeight: FontWeight.w600,
           ),
           SizedBox(height: 16.height),
           AppText(
-            title: 'Subtitle',
+            title: note.subtitle,
             fontSize: 24,
           ),
         ],
