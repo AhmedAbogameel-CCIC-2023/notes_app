@@ -8,6 +8,7 @@ class HomeController {
   List<Note> notes = [];
 
   Future<void> getCachedNotes() async {
+    notes.clear();
     final prefs = await SharedPreferences.getInstance();
     final cachedNotes = prefs.getStringList('notes') ?? [];
     for (var i in cachedNotes) {

@@ -10,14 +10,27 @@ import '../../widgets/app_text_field.dart';
 import 'controller.dart';
 
 class NoteEditorView extends StatefulWidget {
-  const NoteEditorView({super.key});
+  const NoteEditorView({
+    super.key,
+    this.note,
+  });
+
+  final Note? note;
 
   @override
   State<NoteEditorView> createState() => _NoteEditorViewState();
 }
 
 class _NoteEditorViewState extends State<NoteEditorView> {
-  NoteEditorController controller = NoteEditorController();
+  late NoteEditorController controller;
+
+  @override
+  void initState() {
+    controller = NoteEditorController(note: widget.note);
+    controller.titleTXController.text = widget.note?.title ?? '';
+    controller.subtitleTXController.text = widget.note?.subtitle ?? '';
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +50,12 @@ class _NoteEditorViewState extends State<NoteEditorView> {
               message: "Save changes ?",
               confirmTitle: "Save",
               onConfirm: () async {
-                final note = await controller.addNote();
+                Note? note;
+                if (widget.note == null) {
+                  note = await controller.addNote();
+                } else {
+                  note = await controller.editNote();
+                }
                 if (note == null) {
                   Navigator.pop(context);
                 } else {
@@ -63,13 +81,11 @@ class _NoteEditorViewState extends State<NoteEditorView> {
           padding: EdgeInsets.all(16),
           children: [
             AppTextField(
-              hint: "Title",
+              hint: 'Title',
               cursorHeight: 52,
               hintFontSize: 48,
               maxLength: 50,
-              onChanged: (v) {
-                controller.title = v;
-              },
+              controller: controller.titleTXController,
               validator: (v) {
                 if (v == null || v.trim().isEmpty) {
                   return 'Empty field!';
@@ -80,9 +96,7 @@ class _NoteEditorViewState extends State<NoteEditorView> {
             SizedBox(height: 16.height),
             AppTextField(
               hint: "Type Something...",
-              onChanged: (v) {
-                controller.subtitle = v;
-              },
+              controller: controller.subtitleTXController,
               validator: (v) {
                 if (v == null || v.trim().isEmpty) {
                   return 'Empty field!';

@@ -21,10 +21,15 @@ class NoteDetailsView extends StatelessWidget {
         actions: [
           AppIconButton(
             icon: FontAwesomeIcons.penToSquare,
-            onTap: () => RouteUtils.push(
-              context: context,
-              view: NoteEditorView(),
-            ),
+            onTap: () async {
+              final result = await RouteUtils.push(
+                context: context,
+                view: NoteEditorView(note: note),
+              );
+              if (result != null) {
+                Navigator.pop(context, result);
+              }
+            },
           ),
           SizedBox(width: 16),
         ],

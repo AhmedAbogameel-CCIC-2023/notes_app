@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:note_app/core/app_colors/app_colors.dart';
 import 'package:note_app/core/dimensions/dimensions.dart';
 
 import '../../core/route_utils/route_utils.dart';
@@ -53,14 +54,21 @@ class _HomeViewState extends State<HomeView> {
           if (controller.notes.isEmpty) {
             return CreateYourFirstNoteVector();
           }
-          return ListView.builder(
-            padding: EdgeInsets.all(16),
-            itemCount: controller.notes.length,
-            itemBuilder: (context, index) {
-              return NoteCard(
-                note: controller.notes[index],
-              );
+          return RefreshIndicator(
+            onRefresh: () async {
+              await controller.getCachedNotes();
+              setState(() {});
             },
+            color: AppColors.white,
+            child: ListView.builder(
+              padding: EdgeInsets.all(16),
+              itemCount: controller.notes.length,
+              itemBuilder: (context, index) {
+                return NoteCard(
+                  note: controller.notes[index],
+                );
+              },
+            ),
           );
         },
       ),
