@@ -1,28 +1,26 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:note_app/core/caching_utils/caching_utils.dart';
+import 'package:note_app/core/route_utils/route_utils.dart';
 import 'package:note_app/features/home/view.dart';
-import 'package:note_app/widgets/snack_bar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../core/route_utils/route_utils.dart';
+import '../../widgets/snack_bar.dart';
 
-class SignUpController {
+class LoginController {
   final formKey = GlobalKey<FormState>();
-  String? name, email, password;
+  String? email, password;
 
-  Future<void> signUp(BuildContext context) async {
+  Future<void> login(BuildContext context) async {
     formKey.currentState!.save();
     if (!formKey.currentState!.validate()) {
       return;
     }
     try {
       final response = await Dio().post(
-        'https://ink-notes-app.onrender.com/api/v1/auth/register',
+        'https://ink-notes-app.onrender.com/api/v1/auth/login',
         data: {
           "email": email,
           "password": password,
-          "name": name,
         },
       );
       await CachingUtils.cacheUser(response.data);

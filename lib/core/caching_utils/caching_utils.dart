@@ -8,16 +8,11 @@ class CachingUtils {
     _prefs = await SharedPreferences.getInstance();
   }
 
-  static Future<void> cacheUser({
-    required String email,
-    required String name,
-    required String token,
-    required String id,
-}) async {
-    await _prefs.setString('email', email);
-    await _prefs.setString('name', name);
-    await _prefs.setString('token', token);
-    await _prefs.setString('user_id', id);
+  static Future<void> cacheUser(Map<String, dynamic> data) async {
+    await _prefs.setString('email', data['data']['email']);
+    await _prefs.setString('name', data['data']['name']);
+    await _prefs.setString('token', data['token']);
+    await _prefs.setString('user_id', data['data']['_id']);
   }
 
   static Future<void> deleteUser() async {
