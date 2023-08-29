@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:note_app/core/caching_utils/caching_utils.dart';
 
 import 'core/utils.dart';
+import 'features/home/view.dart';
 import 'features/login/view.dart';
 
 void main() async {
   await ScreenUtil.ensureScreenSize();
+  await CachingUtils.init();
   runApp(MyApp());
 }
 
@@ -25,7 +28,7 @@ class MyApp extends StatelessWidget {
       },
       theme: Utils.appTheme,
       title: "Notes",
-      home: LoginView(),
+      home: CachingUtils.isLogged ? HomeView() : LoginView(),
     );
   }
 }

@@ -9,6 +9,8 @@ import 'package:note_app/widgets/app_button.dart';
 import 'package:note_app/widgets/app_text.dart';
 import 'package:note_app/widgets/app_text_field.dart';
 
+import '../../widgets/app_loading_indicator.dart';
+
 class SignUpView extends StatefulWidget {
   const SignUpView({super.key});
 
@@ -18,6 +20,12 @@ class SignUpView extends StatefulWidget {
 
 class _SignUpViewState extends State<SignUpView> {
   SignUpController controller = SignUpController();
+  bool isLoading = false;
+
+  void toggleLoading(bool value) {
+    isLoading = value;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,8 +72,13 @@ class _SignUpViewState extends State<SignUpView> {
             ),
             SizedBox(height: 64.height),
             AppButton(
+              isLoading: isLoading,
               title: 'Sign up',
-              onTap: controller.signUp,
+              onTap: () async {
+                toggleLoading(true);
+                await controller.signUp(context);
+                toggleLoading(false);
+              },
             ),
             SizedBox(height: 48.height),
             Row(

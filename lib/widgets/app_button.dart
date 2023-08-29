@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:note_app/core/dimensions/dimensions.dart';
 
 import '../core/app_colors/app_colors.dart';
+import 'app_loading_indicator.dart';
 import 'app_text.dart';
 
 class AppButton extends StatelessWidget {
@@ -10,14 +11,19 @@ class AppButton extends StatelessWidget {
     required this.title,
     this.onTap,
     this.color = AppColors.darkGray,
+    this.isLoading = false,
   });
 
   final String title;
   final void Function()? onTap;
   final Color color;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return AppLoadingIndicator();
+    }
     return InkWell(
       onTap: onTap,
       child: Container(

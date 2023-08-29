@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:note_app/core/app_colors/app_colors.dart';
 
 class AppLoadingIndicator extends StatelessWidget {
   const AppLoadingIndicator({super.key});
@@ -6,7 +7,10 @@ class AppLoadingIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: CircularProgressIndicator.adaptive(),
+      child: CircularProgressIndicator(
+        color: AppColors.gray,
+        strokeWidth: 1.5,
+      ),
     );
   }
 }

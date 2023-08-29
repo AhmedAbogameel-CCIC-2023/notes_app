@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:note_app/core/app_colors/app_colors.dart';
+import 'package:note_app/core/caching_utils/caching_utils.dart';
 import 'package:note_app/core/dimensions/dimensions.dart';
+import 'package:note_app/features/login/view.dart';
 
 import '../../core/route_utils/route_utils.dart';
 import '../../widgets/app/create_your_first_note_vector.dart';
@@ -43,8 +45,14 @@ class _HomeViewState extends State<HomeView> {
           ),
           SizedBox(width: 12.width),
           AppIconButton(
-            icon: FontAwesomeIcons.circleInfo,
-            onTap: () {},
+            icon: FontAwesomeIcons.arrowRightFromBracket,
+            onTap: () async {
+              await CachingUtils.deleteUser();
+              RouteUtils.pushAndPopAll(
+                context: context,
+                view: LoginView(),
+              );
+            },
           ),
           SizedBox(width: 16.width),
         ],
