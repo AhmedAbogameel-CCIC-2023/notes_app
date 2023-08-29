@@ -12,12 +12,14 @@ class AppTextField extends StatelessWidget {
     this.validator,
     this.maxLength,
     this.controller,
+    this.onSaved,
   });
 
   final String hint;
   final double cursorHeight;
   final double hintFontSize;
   final void Function(String)? onChanged;
+  final void Function(String?)? onSaved;
   final String? Function(String?)? validator;
   final int? maxLength;
   final TextEditingController? controller;
@@ -36,6 +38,7 @@ class AppTextField extends StatelessWidget {
       maxLines: null,
       textInputAction: TextInputAction.newline,
       onChanged: onChanged,
+      onSaved: onSaved,
       validator: validator,
       maxLength: maxLength,
       decoration: InputDecoration(
