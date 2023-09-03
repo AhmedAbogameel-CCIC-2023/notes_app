@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:note_app/core/caching_utils/caching_utils.dart';
+import 'package:note_app/core/network_utils/network_utils.dart';
 import 'package:note_app/core/route_utils/route_utils.dart';
 import 'package:note_app/features/home/view.dart';
 
@@ -16,8 +17,8 @@ class LoginController {
       return;
     }
     try {
-      final response = await Dio().post(
-        'https://ink-notes-app.onrender.com/api/v1/auth/login',
+      final response = await NetworkUtils.post(
+        'auth/login',
         data: {
           "email": email,
           "password": password,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:note_app/core/caching_utils/caching_utils.dart';
+import 'package:note_app/core/network_utils/network_utils.dart';
 
 import 'core/utils.dart';
 import 'features/home/view.dart';
@@ -9,6 +10,7 @@ import 'features/login/view.dart';
 void main() async {
   await ScreenUtil.ensureScreenSize();
   await CachingUtils.init();
+  await NetworkUtils.init();
   runApp(MyApp());
 }
 

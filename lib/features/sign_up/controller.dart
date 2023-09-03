@@ -5,6 +5,7 @@ import 'package:note_app/features/home/view.dart';
 import 'package:note_app/widgets/snack_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../core/network_utils/network_utils.dart';
 import '../../core/route_utils/route_utils.dart';
 
 class SignUpController {
@@ -17,8 +18,8 @@ class SignUpController {
       return;
     }
     try {
-      final response = await Dio().post(
-        'https://ink-notes-app.onrender.com/api/v1/auth/register',
+      final response = await NetworkUtils.post(
+        'auth/register',
         data: {
           "email": email,
           "password": password,
