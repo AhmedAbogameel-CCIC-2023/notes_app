@@ -39,8 +39,7 @@ class _HomeViewState extends State<HomeView> {
           AppIconButton(
             icon: FontAwesomeIcons.magnifyingGlass,
             onTap: () => RouteUtils.push(
-              context: context,
-              view: SearchView(notes: controller.notes),
+              SearchView(notes: controller.notes),
             ),
           ),
           SizedBox(width: 12.width),
@@ -48,10 +47,7 @@ class _HomeViewState extends State<HomeView> {
             icon: FontAwesomeIcons.arrowRightFromBracket,
             onTap: () async {
               await CachingUtils.deleteUser();
-              RouteUtils.pushAndPopAll(
-                context: context,
-                view: LoginView(),
-              );
+              RouteUtils.pushAndPopAll(LoginView());
             },
           ),
           SizedBox(width: 16.width),
@@ -87,8 +83,7 @@ class _HomeViewState extends State<HomeView> {
         ),
         onPressed: () async {
           final result = await RouteUtils.push(
-            context: context,
-            view: NoteEditorView(),
+            NoteEditorView(),
           );
           if (result != null) {
             controller.notes.insert(0, result);

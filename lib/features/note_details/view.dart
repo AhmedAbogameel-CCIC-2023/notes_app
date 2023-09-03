@@ -23,8 +23,7 @@ class NoteDetailsView extends StatelessWidget {
             icon: FontAwesomeIcons.penToSquare,
             onTap: () async {
               final result = await RouteUtils.push(
-                context: context,
-                view: NoteEditorView(note: note),
+                NoteEditorView(note: note),
               );
               if (result != null) {
                 Navigator.pop(context, result);

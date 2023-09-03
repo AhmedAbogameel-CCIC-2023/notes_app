@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:note_app/core/caching_utils/caching_utils.dart';
 import 'package:note_app/features/home/view.dart';
 import 'package:note_app/widgets/snack_bar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/network_utils/network_utils.dart';
 import '../../core/route_utils/route_utils.dart';
@@ -28,8 +27,7 @@ class SignUpController {
       );
       await CachingUtils.cacheUser(response.data);
       RouteUtils.pushAndPopAll(
-        context: context,
-        view: HomeView(),
+        HomeView(),
       );
     } on DioException catch (e) {
       showSnackBar(

@@ -23,7 +23,7 @@ class AppAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: false,
       leading: enableBackButton
           ? AppIconButton(
-              onTap: () => RouteUtils.pop(context),
+              onTap: RouteUtils.pop,
               icon: FontAwesomeIcons.chevronLeft,
               padding: EdgeInsets.only(left: 16),
             )

@@ -9,8 +9,6 @@ import 'package:note_app/widgets/app_button.dart';
 import 'package:note_app/widgets/app_text.dart';
 import 'package:note_app/widgets/app_text_field.dart';
 
-import '../../widgets/app_loading_indicator.dart';
-
 class SignUpView extends StatefulWidget {
   const SignUpView({super.key});
 
@@ -92,7 +90,7 @@ class _SignUpViewState extends State<SignUpView> {
                 AppText(
                   title: 'Login',
                   textDecoration: TextDecoration.underline,
-                  onTap: () => RouteUtils.pop(context),
+                  onTap: RouteUtils.pop,
                 ),
               ],
             ),

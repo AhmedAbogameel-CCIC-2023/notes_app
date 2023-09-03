@@ -50,8 +50,7 @@ class NoteCard extends StatelessWidget {
         child: InkWell(
           borderRadius: _radius,
           onTap: () => RouteUtils.push(
-            context: context,
-            view: NoteDetailsView(note: note),
+            NoteDetailsView(note: note),
           ),
           child: Container(
             padding: EdgeInsets.symmetric(

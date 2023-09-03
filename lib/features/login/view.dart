@@ -79,8 +79,7 @@ class LoginView extends StatelessWidget {
                         title: 'Sign up',
                         textDecoration: TextDecoration.underline,
                         onTap: () => RouteUtils.push(
-                          context: context,
-                          view: SignUpView(),
+                          SignUpView(),
                         ),
                       ),
                     ],
