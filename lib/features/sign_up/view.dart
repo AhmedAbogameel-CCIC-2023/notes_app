@@ -74,7 +74,7 @@ class _SignUpViewState extends State<SignUpView> {
               title: 'Sign up',
               onTap: () async {
                 toggleLoading(true);
-                await controller.signUp(context);
+                await controller.signUp();
                 toggleLoading(false);
               },
             ),

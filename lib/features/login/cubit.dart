@@ -15,7 +15,7 @@ class LoginCubit extends Cubit<LoginStates> {
   final formKey = GlobalKey<FormState>();
   String? email, password;
 
-  Future<void> login(BuildContext context) async {
+  Future<void> login() async {
     formKey.currentState!.save();
     if (!formKey.currentState!.validate()) {
       return;
@@ -30,13 +30,10 @@ class LoginCubit extends Cubit<LoginStates> {
         },
       );
       await CachingUtils.cacheUser(response.data);
-      RouteUtils.pushAndPopAll(
-        HomeView(),
-      );
+      RouteUtils.pushAndPopAll(HomeView());
     } on DioException catch (e) {
       showSnackBar(
-        context,
-        title: e.response?.data['message'] ?? '',
+        message: e.response?.data['message'] ?? '',
         error: true,
       );
     }

@@ -11,7 +11,7 @@ class SignUpController {
   final formKey = GlobalKey<FormState>();
   String? name, email, password;
 
-  Future<void> signUp(BuildContext context) async {
+  Future<void> signUp() async {
     formKey.currentState!.save();
     if (!formKey.currentState!.validate()) {
       return;
@@ -31,8 +31,7 @@ class SignUpController {
       );
     } on DioException catch (e) {
       showSnackBar(
-        context,
-        title: e.response?.data['message'] ?? '',
+        message: e.response?.data['message'] ?? '',
         error: true,
       );
     }

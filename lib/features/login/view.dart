@@ -62,7 +62,7 @@ class LoginView extends StatelessWidget {
                       return AppButton(
                         title: 'Login',
                         isLoading: state is LoginLoading,
-                        onTap: () => cubit.login(context),
+                        onTap: cubit.login,
                       );
                     },
                   ),
