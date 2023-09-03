@@ -1,13 +1,17 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:note_app/core/caching_utils/caching_utils.dart';
-import 'package:note_app/core/network_utils/network_utils.dart';
-import 'package:note_app/core/route_utils/route_utils.dart';
-import 'package:note_app/features/home/view.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note_app/features/login/states.dart';
 
+import '../../core/caching_utils/caching_utils.dart';
+import '../../core/network_utils/network_utils.dart';
+import '../../core/route_utils/route_utils.dart';
 import '../../widgets/snack_bar.dart';
+import '../home/view.dart';
 
-class LoginController {
+class LoginCubit extends Cubit<LoginStates> {
+  LoginCubit() : super(LoginInit());
+
   final formKey = GlobalKey<FormState>();
   String? email, password;
 
@@ -16,6 +20,7 @@ class LoginController {
     if (!formKey.currentState!.validate()) {
       return;
     }
+    emit(LoginLoading());
     try {
       final response = await NetworkUtils.post(
         'auth/login',
@@ -36,5 +41,7 @@ class LoginController {
         error: true,
       );
     }
+    emit(LoginInit());
   }
+
 }
