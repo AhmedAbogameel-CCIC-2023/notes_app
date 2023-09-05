@@ -10,6 +10,7 @@ class NetworkUtils {
   static Future<void> init() async {
     _dio = Dio();
     _dio.options.baseUrl = _baseURL;
+    _dio.options.validateStatus = (v) => v! < 500;
   }
 
   static Future<Response<dynamic>> post(

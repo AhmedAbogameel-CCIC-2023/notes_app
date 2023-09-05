@@ -11,6 +11,7 @@ class HomeCubit extends Cubit<HomeStates> {
   List<Note> notes = [];
 
   Future<void> getNotes() async {
+    notes.clear();
     emit(HomeLoading());
     try {
       final response = await NetworkUtils.get('note?page=1');
