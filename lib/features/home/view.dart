@@ -60,40 +60,40 @@ class HomeView extends StatelessWidget {
             return RefreshIndicator(
               onRefresh: cubit.getNotes,
               color: AppColors.white,
-              child: ListView.builder(
-                padding: EdgeInsets.all(16),
-                itemCount: notes.length + 1,
-                itemBuilder: (context, index) {
-                  if (notes.length == index) {
-                    if (state is HomeMoreLoading) {
-                      return AppLoadingIndicator();
-                    } else if (cubit.totalNotesPages == cubit.currentNotesPage) {
+              child: NotificationListener<ScrollNotification>(
+                onNotification: (notification) {
+                  if (notification.metrics.extentAfter <= 0) {
+                    cubit.getMoreNotes();
+                  }
+                  return false;
+                },
+                child: ListView.builder(
+                  padding: EdgeInsets.all(16),
+                  itemCount: notes.length + 1,
+                  itemBuilder: (context, index) {
+                    if (index == notes.length) {
+                      if (state is HomeMoreLoading) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 34),
+                          child: AppLoadingIndicator(),
+                        );
+                      }
                       return SizedBox.shrink();
                     }
-                    return Container(
-                      margin: EdgeInsets.only(bottom: 34),
-                      alignment: Alignment.center,
-                      child: AppText(
-                        title: 'View More',
-                        fontSize: 18,
-                        textDecoration: TextDecoration.underline,
-                        onTap: cubit.getMoreNotes,
-                      ),
+                    return NoteCard(
+                      note: notes[index],
+                      onTap: () {
+                        RouteUtils.push(
+                          BlocProvider.value(
+                            value: cubit,
+                            child: NoteDetailsView(id: notes[index].id),
+                          ),
+                        );
+                      },
+                      onDismiss: () => cubit.deleteNote(notes[index]),
                     );
-                  }
-                  return NoteCard(
-                    note: notes[index],
-                    onTap: () {
-                      RouteUtils.push(
-                        BlocProvider.value(
-                          value: cubit,
-                          child: NoteDetailsView(id: notes[index].id),
-                        ),
-                      );
-                    },
-                    onDismiss: () => cubit.deleteNote(notes[index]),
-                  );
-                },
+                  },
+                ),
               ),
             );
           },
