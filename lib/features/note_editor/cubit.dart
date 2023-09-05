@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note_app/core/network_utils/network_utils.dart';
 
+import '../../core/models/note.dart';
 import '../../widgets/snack_bar.dart';
 
 part 'states.dart';
@@ -18,7 +19,7 @@ class NoteEditorCubit extends Cubit<NoteEditorStates> {
     return formKey.currentState!.validate();
   }
 
-  Future<void> addNote() async {
+  Future<Note?> addNote() async {
     emit(NoteEditorLoading());
     try {
       final response = await NetworkUtils.post(
@@ -30,6 +31,7 @@ class NoteEditorCubit extends Cubit<NoteEditorStates> {
       );
       if (response.statusCode == 200) {
         showSnackBar(message: "Note Added Successfully!");
+        return Note.fromJson(response.data);
       } else {
         showSnackBar(message: response.data['message'], error: true);
       }
@@ -39,6 +41,7 @@ class NoteEditorCubit extends Cubit<NoteEditorStates> {
       print(s);
     }
     emit(NoteEditorInit());
+    return null;
   }
 
   Future<void> editNote() async {}

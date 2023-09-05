@@ -25,4 +25,9 @@ class HomeCubit extends Cubit<HomeStates> {
     emit(HomeInit());
   }
 
+  void insertNote(Note note) {
+    notes.insert(0, note);
+    emit(HomeInit());
+  }
+
 }

@@ -48,9 +48,13 @@ class NoteEditorView extends StatelessWidget {
                         context,
                         message: "Save changes ?",
                         confirmTitle: "Save",
-                        onConfirm: () {
+                        onConfirm: () async {
                           Navigator.pop(context);
-                          cubit.addNote();
+                          final note = await cubit.addNote();
+                          if (note != null) {
+                            BlocProvider.of<HomeCubit>(context).insertNote(note);
+                            Navigator.pop(context);
+                          }
                         },
                         onCancel: () => Navigator.pop(context),
                       );

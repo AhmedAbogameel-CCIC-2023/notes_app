@@ -18,6 +18,7 @@ import '../note_editor/view.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -69,14 +70,23 @@ class HomeView extends StatelessWidget {
             );
           },
         ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(
-            FontAwesomeIcons.plus,
-            size: 24.height,
-          ),
-          onPressed: () async {
-            await RouteUtils.push(NoteEditorView());
-          },
+        floatingActionButton: Builder(
+          builder: (context) {
+            return FloatingActionButton(
+              child: Icon(
+                FontAwesomeIcons.plus,
+                size: 24.height,
+              ),
+              onPressed: () async {
+                await RouteUtils.push(
+                  BlocProvider.value(
+                    value: BlocProvider.of<HomeCubit>(context),
+                    child: NoteEditorView(),
+                  ),
+                );
+              },
+            );
+          }
         ),
       ),
     );
