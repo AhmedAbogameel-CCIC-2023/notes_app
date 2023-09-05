@@ -16,6 +16,7 @@ import '../../widgets/app_app_bar.dart';
 import '../../widgets/app_icon_button.dart';
 import '../note_details/view.dart';
 import '../note_editor/view.dart';
+import '../search/view.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -30,10 +31,9 @@ class HomeView extends StatelessWidget {
           actions: [
             AppIconButton(
               icon: FontAwesomeIcons.magnifyingGlass,
-              onTap: () {},
-              // onTap: () => RouteUtils.push(
-              //   SearchView(notes: controller.notes),
-              // ),
+              onTap: () => RouteUtils.push(
+                SearchView(),
+              ),
             ),
             SizedBox(width: 12.width),
             AppIconButton(
