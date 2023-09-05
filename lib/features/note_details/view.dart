@@ -10,9 +10,9 @@ import '../../widgets/app_text.dart';
 import '../note_editor/view.dart';
 
 class NoteDetailsView extends StatelessWidget {
-  const NoteDetailsView({super.key, required this.note});
+  const NoteDetailsView({super.key, required this.id});
 
-  final Note note;
+  final String id;
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +22,12 @@ class NoteDetailsView extends StatelessWidget {
           AppIconButton(
             icon: FontAwesomeIcons.penToSquare,
             onTap: () async {
-              final result = await RouteUtils.push(
-                NoteEditorView(note: note),
-              );
-              if (result != null) {
-                Navigator.pop(context, result);
-              }
+              // final result = await RouteUtils.push(
+              //   NoteEditorView(note: note),
+              // );
+              // if (result != null) {
+              //   Navigator.pop(context, result);
+              // }
             },
           ),
           SizedBox(width: 16),
@@ -38,13 +38,13 @@ class NoteDetailsView extends StatelessWidget {
         padding: EdgeInsets.all(16),
         children: [
           AppText(
-            title: note.title,
+            title: "note.title",
             fontSize: 36,
             fontWeight: FontWeight.w600,
           ),
           SizedBox(height: 16.height),
           AppText(
-            title: note.subtitle,
+            title: "note.subtitle",
             fontSize: 24,
           ),
         ],

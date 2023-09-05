@@ -27,13 +27,7 @@ class NoteCard extends StatelessWidget {
     return Dismissible(
       key: UniqueKey(),
       onDismissed: (direction) async {
-        final prefs = await SharedPreferences.getInstance();
-        final cachedNotes = prefs.getStringList('notes') ?? [];
-        final index = cachedNotes.indexWhere((element) {
-          return note.id == jsonDecode(element)['id'];
-        });
-        cachedNotes.removeAt(index);
-        prefs.setStringList('notes', cachedNotes);
+
       },
       background: Container(
         margin: _cardMargin,
@@ -50,7 +44,7 @@ class NoteCard extends StatelessWidget {
         child: InkWell(
           borderRadius: _radius,
           onTap: () => RouteUtils.push(
-            NoteDetailsView(note: note),
+            NoteDetailsView(id: note.id),
           ),
           child: Container(
             padding: EdgeInsets.symmetric(
