@@ -14,6 +14,7 @@ import '../../widgets/app/create_your_first_note_vector.dart';
 import '../../widgets/app/note_card.dart';
 import '../../widgets/app_app_bar.dart';
 import '../../widgets/app_icon_button.dart';
+import '../note_details/view.dart';
 import '../note_editor/view.dart';
 
 class HomeView extends StatelessWidget {
@@ -64,6 +65,14 @@ class HomeView extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return NoteCard(
                     note: notes[index],
+                    onTap: () {
+                      RouteUtils.push(
+                        BlocProvider.value(
+                          value: cubit,
+                          child: NoteDetailsView(id: notes[index].id),
+                        ),
+                      );
+                    },
                     onDismiss: () => cubit.deleteNote(notes[index]),
                   );
                 },

@@ -51,7 +51,10 @@ class _SearchViewState extends State<SearchView> {
                   return ListView.builder(
                     itemCount: controller.filteredNotes.length,
                     itemBuilder: (context, index) {
-                      return NoteCard(note: controller.filteredNotes[index]);
+                      return NoteCard(
+                        note: controller.filteredNotes[index],
+                        onTap: () {},
+                      );
                     },
                   );
                 },

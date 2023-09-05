@@ -16,10 +16,11 @@ import '../../features/note_details/view.dart';
 import '../app_text.dart';
 
 class NoteCard extends StatelessWidget {
-  const NoteCard({super.key, required this.note, this.onDismiss});
+  const NoteCard({super.key, required this.note, this.onDismiss, required this.onTap});
 
   final Note note;
   final void Function()? onDismiss;
+  final void Function() onTap;
 
   EdgeInsets get _cardMargin => EdgeInsets.only(bottom: 24.height);
 
@@ -48,9 +49,7 @@ class NoteCard extends StatelessWidget {
         padding: _cardMargin,
         child: InkWell(
           borderRadius: _radius,
-          onTap: () => RouteUtils.push(
-            NoteDetailsView(id: note.id),
-          ),
+          onTap: onTap,
           child: Container(
             padding: EdgeInsets.symmetric(
               horizontal: 16.width,

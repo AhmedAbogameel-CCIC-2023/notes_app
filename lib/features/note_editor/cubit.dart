@@ -8,12 +8,19 @@ import '../../widgets/snack_bar.dart';
 part 'states.dart';
 
 class NoteEditorCubit extends Cubit<NoteEditorStates> {
-  NoteEditorCubit() : super(NoteEditorInit());
+  NoteEditorCubit({required this.note}) : super(NoteEditorInit());
+
+  final Note? note;
 
   final formKey = GlobalKey<FormState>();
 
   TextEditingController titleTXController = TextEditingController();
   TextEditingController subtitleTXController = TextEditingController();
+
+  void init() {
+    titleTXController.text = note?.title ?? '';
+    subtitleTXController.text = note?.subtitle ?? '';
+  }
 
   bool validateInputs() {
     return formKey.currentState!.validate();
@@ -44,6 +51,29 @@ class NoteEditorCubit extends Cubit<NoteEditorStates> {
     return null;
   }
 
-  Future<void> editNote() async {}
+  Future<Note?> editNote() async {
+    emit(NoteEditorLoading());
+    try {
+      final response = await NetworkUtils.patch(
+        'note/${note!.id}',
+        data: {
+          "title": titleTXController.text,
+          "subtitle": subtitleTXController.text
+        },
+      );
+      if (response.statusCode == 200) {
+        showSnackBar("Note Edited Successfully!");
+        return Note.fromJson(response.data);
+      } else {
+        showSnackBar(response.data['message'], error: true);
+      }
+    } catch (e, s) {
+      showSnackBar("Failed try again!", error: true);
+      print(e);
+      print(s);
+    }
+    emit(NoteEditorInit());
+    return null;
+  }
 
 }

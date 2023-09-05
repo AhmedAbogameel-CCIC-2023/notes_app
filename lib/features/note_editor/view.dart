@@ -16,12 +16,15 @@ import 'controller.dart';
 class NoteEditorView extends StatelessWidget {
   const NoteEditorView({
     super.key,
+    this.note,
   });
+
+  final Note? note;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => NoteEditorCubit(),
+      create: (context) => NoteEditorCubit(note: note)..init(),
       child: Builder(builder: (context) {
         final cubit = BlocProvider.of<NoteEditorCubit>(context);
         return Scaffold(
@@ -50,9 +53,18 @@ class NoteEditorView extends StatelessWidget {
                         confirmTitle: "Save",
                         onConfirm: () async {
                           Navigator.pop(context);
-                          final note = await cubit.addNote();
-                          if (note != null) {
-                            BlocProvider.of<HomeCubit>(context).insertNote(note);
+                          if (note == null) {
+                            final note = await cubit.addNote();
+                            if (note != null) {
+                              BlocProvider.of<HomeCubit>(context).insertNote(note);
+                              Navigator.pop(context);
+                            }
+                            return;
+                          }
+                          final editedNote = await cubit.editNote();
+                          if (editedNote != null) {
+                            BlocProvider.of<HomeCubit>(context).editNote(editedNote);
+                            Navigator.pop(context);
                             Navigator.pop(context);
                           }
                         },

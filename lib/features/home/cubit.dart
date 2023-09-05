@@ -31,6 +31,12 @@ class HomeCubit extends Cubit<HomeStates> {
     emit(HomeInit());
   }
 
+  void editNote(Note note) {
+    notes.removeWhere((element) => element.id == note.id);
+    notes.insert(0, note);
+    emit(HomeInit());
+  }
+
   Future<void> deleteNote(Note note) async {
     try {
       final response = await NetworkUtils.delete('note/${note.id}');
