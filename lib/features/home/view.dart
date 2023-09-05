@@ -8,6 +8,7 @@ import 'package:note_app/features/home/cubit.dart';
 import 'package:note_app/features/home/states.dart';
 import 'package:note_app/features/login/view.dart';
 import 'package:note_app/widgets/app_loading_indicator.dart';
+import 'package:note_app/widgets/app_text.dart';
 
 import '../../core/route_utils/route_utils.dart';
 import '../../widgets/app/create_your_first_note_vector.dart';
@@ -61,8 +62,25 @@ class HomeView extends StatelessWidget {
               color: AppColors.white,
               child: ListView.builder(
                 padding: EdgeInsets.all(16),
-                itemCount: notes.length,
+                itemCount: notes.length + 1,
                 itemBuilder: (context, index) {
+                  if (notes.length == index) {
+                    if (state is HomeMoreLoading) {
+                      return AppLoadingIndicator();
+                    } else if (cubit.totalNotesPages == cubit.currentNotesPage) {
+                      return SizedBox.shrink();
+                    }
+                    return Container(
+                      margin: EdgeInsets.only(bottom: 34),
+                      alignment: Alignment.center,
+                      child: AppText(
+                        title: 'View More',
+                        fontSize: 18,
+                        textDecoration: TextDecoration.underline,
+                        onTap: cubit.getMoreNotes,
+                      ),
+                    );
+                  }
                   return NoteCard(
                     note: notes[index],
                     onTap: () {

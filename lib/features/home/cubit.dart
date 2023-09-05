@@ -9,19 +9,37 @@ import '../../core/models/note.dart';
 class HomeCubit extends Cubit<HomeStates> {
   HomeCubit() : super(HomeInit());
 
+  int currentNotesPage = 1;
   List<Note> notes = [];
+  int? totalNotesPages;
 
   Future<void> getNotes() async {
     notes.clear();
+    currentNotesPage = 1;
     emit(HomeLoading());
     try {
-      final response = await NetworkUtils.get('note?page=1');
+      final response = await NetworkUtils.get('note?page=$currentNotesPage');
+      totalNotesPages = response.data['total'];
       for (var i in response.data['notes']) {
         notes.add(Note.fromJson(i));
       }
     } catch (e, s) {
       print(e);
       print(s);
+    }
+    emit(HomeInit());
+  }
+
+  Future<void> getMoreNotes() async {
+    currentNotesPage++;
+    emit(HomeMoreLoading());
+    try {
+      final response = await NetworkUtils.get('note?page=$currentNotesPage');
+      for (var i in response.data['notes']) {
+        notes.add(Note.fromJson(i));
+      }
+    } catch (e) {
+      currentNotesPage--;
     }
     emit(HomeInit());
   }
