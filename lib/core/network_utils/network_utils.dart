@@ -44,4 +44,19 @@ class NetworkUtils {
       ),
     );
   }
+
+  static Future<Response<dynamic>> delete(
+    String path, {
+    Map<String, dynamic>? headers,
+  }) async {
+    if (headers == null && CachingUtils.isLogged) {
+      headers = {"Authorization": "Bearer ${CachingUtils.token}"};
+    }
+    return _dio.delete(
+      path,
+      options: Options(
+        headers: headers,
+      ),
+    );
+  }
 }

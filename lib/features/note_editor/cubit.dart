@@ -30,13 +30,13 @@ class NoteEditorCubit extends Cubit<NoteEditorStates> {
         },
       );
       if (response.statusCode == 200) {
-        showSnackBar(message: "Note Added Successfully!");
+        showSnackBar("Note Added Successfully!");
         return Note.fromJson(response.data);
       } else {
-        showSnackBar(message: response.data['message'], error: true);
+        showSnackBar(response.data['message'], error: true);
       }
     } catch (e, s) {
-      showSnackBar(message: "Failed try again!", error: true);
+      showSnackBar("Failed try again!", error: true);
       print(e);
       print(s);
     }

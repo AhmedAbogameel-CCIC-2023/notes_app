@@ -2,9 +2,11 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:note_app/core/dimensions/dimensions.dart';
 import 'package:note_app/core/route_utils/route_utils.dart';
+import 'package:note_app/features/home/cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/app_colors/app_colors.dart';
@@ -14,9 +16,10 @@ import '../../features/note_details/view.dart';
 import '../app_text.dart';
 
 class NoteCard extends StatelessWidget {
-  const NoteCard({super.key, required this.note});
+  const NoteCard({super.key, required this.note, this.onDismiss});
 
   final Note note;
+  final void Function()? onDismiss;
 
   EdgeInsets get _cardMargin => EdgeInsets.only(bottom: 24.height);
 
@@ -27,7 +30,9 @@ class NoteCard extends StatelessWidget {
     return Dismissible(
       key: UniqueKey(),
       onDismissed: (direction) async {
-
+        if (onDismiss != null) {
+          onDismiss!();
+        }
       },
       background: Container(
         margin: _cardMargin,

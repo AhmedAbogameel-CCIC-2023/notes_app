@@ -64,6 +64,7 @@ class HomeView extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return NoteCard(
                     note: notes[index],
+                    onDismiss: () => cubit.deleteNote(notes[index]),
                   );
                 },
               ),

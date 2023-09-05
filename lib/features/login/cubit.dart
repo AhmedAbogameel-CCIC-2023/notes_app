@@ -33,7 +33,7 @@ class LoginCubit extends Cubit<LoginStates> {
       RouteUtils.pushAndPopAll(HomeView());
     } on DioException catch (e) {
       showSnackBar(
-        message: e.response?.data['message'] ?? '',
+        e.response?.data['message'] ?? '',
         error: true,
       );
     }

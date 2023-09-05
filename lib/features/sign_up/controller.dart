@@ -31,7 +31,7 @@ class SignUpController {
       );
     } on DioException catch (e) {
       showSnackBar(
-        message: e.response?.data['message'] ?? '',
+        e.response?.data['message'] ?? '',
         error: true,
       );
     }
